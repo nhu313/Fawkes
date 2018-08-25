@@ -4,13 +4,13 @@ defmodule Fawkes.Schedule.Slot do
 
 
   schema "schedule_slots" do
-    field :end_time, :utc_datetime
+    field :end_time, Timex.Ecto.DateTime
     field :slug, :string
-    field :start_time, :utc_datetime
+    field :start_time, Timex.Ecto.DateTime
 
     has_many :talks, Fawkes.Schedule.Talk
     has_one :event, Fawkes.Schedule.Event
-    
+
     timestamps()
   end
 
