@@ -234,7 +234,9 @@ defmodule Fawkes.Schedule do
 
   """
   def list_speakers do
-    Repo.all(Speaker)
+    Speaker
+    |> preload(:talk)
+    |> Repo.all()
   end
 
   @doc """
