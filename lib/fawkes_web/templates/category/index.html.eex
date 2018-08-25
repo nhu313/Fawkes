@@ -1,0 +1,20 @@
+<h2>Categories</h2>
+<a href="/categories/new">New Category</a>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Slug</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for category <- @categories do %>
+      <tr>
+        <td><%= category.name %></td>
+        <td><%= category.slug %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
