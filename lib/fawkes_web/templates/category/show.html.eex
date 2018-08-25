@@ -1,0 +1,4 @@
+<h1>Category</h1>
+<p>Name: <%= @category.name %></p>
+<p>Slug: <%= @category.slug %></p>
+<p>Icon URL: <%= @category.icon_url %></p>

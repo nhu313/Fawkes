@@ -21,4 +21,9 @@ defmodule FawkesWeb.CategoryController do
         render(conn, "new.html", changeset: changeset)
     end
   end
+
+  def show(conn, %{"id" => id}) do
+    category = Schedule.get_category(id)
+    render(conn, "show.html", category: category)
+  end
 end

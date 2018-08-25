@@ -15,4 +15,8 @@ defmodule Fawkes.Schedule do
     |> Category.changeset(attrs)
     |> Repo.insert()
   end
+
+  def get_category(id) do
+    Repo.get!(Category, id)
+  end
 end

@@ -19,6 +19,7 @@ defmodule FawkesWeb.Router do
     get "/", PageController, :index
     get "/about", PageController, :about
     get "/categories/new", CategoryController, :new
+    get "/categories/:id", CategoryController, :show
     post "/categories", CategoryController, :create
     get "/categories", CategoryController, :index
 
