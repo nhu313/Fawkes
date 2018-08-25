@@ -23,7 +23,16 @@ defmodule FawkesWeb.CategoryController do
   end
 
   def show(conn, %{"id" => id}) do
-    category = Schedule.get_category(id)
+    category = Schedule.get_category!(id)
     render(conn, "show.html", category: category)
+  end
+
+  def delete(conn, %{"id" => id}) do
+      category = Schedule.get_category!(id)
+      {:ok, _category} = Schedule.delete_category(category)
+
+      conn
+      |> put_flash(:info, "Category deleted.")
+      |> redirect(to: category_path(conn, :index))
   end
 end

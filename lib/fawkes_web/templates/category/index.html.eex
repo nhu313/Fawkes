@@ -14,7 +14,7 @@
       <tr>
         <td><%= category.name %></td>
         <td><%= category.slug %></td>
-        <td><a href="/categories/<%= category.id %>">Show</a>
+        <td><a href="/categories/<%= category.id %>">Show</a><span><%= link "Delete", to: category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span></td>
       </tr>
   <% end %>
   </tbody>

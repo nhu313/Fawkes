@@ -16,7 +16,11 @@ defmodule Fawkes.Schedule do
     |> Repo.insert()
   end
 
-  def get_category(id) do
+  def get_category!(id) do
     Repo.get!(Category, id)
+  end
+
+  def delete_category(category) do
+    Repo.delete(category)
   end
 end
