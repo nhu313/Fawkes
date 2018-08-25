@@ -2,6 +2,7 @@ defmodule Fawkes.Schedule do
   import Ecto.Query
   alias Fawkes.Repo
   alias Fawkes.Schedule.Category
+  alias Fawkes.Schedule.Talk
 
   def all_category do
     Repo.all(Category)
@@ -318,5 +319,11 @@ defmodule Fawkes.Schedule do
   """
   def change_speaker(%Speaker{} = speaker) do
     Speaker.changeset(speaker, %{})
+  end
+
+  def get_talk!(id) do
+    Talk
+    |> preload([:slot, :speakers, :categories, :audience, :location])
+    |> Repo.get_by!(id: id)
   end
 end

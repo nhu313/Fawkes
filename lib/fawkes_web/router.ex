@@ -16,6 +16,7 @@ defmodule FawkesWeb.Router do
   scope "/", FawkesWeb do
     pipe_through :browser # Use the default browser stack
 
+    get "/talks/:id", TalkController, :show
     get "/", PageController, :index
     get "/about", PageController, :about
     get "/categories/new", CategoryController, :new
