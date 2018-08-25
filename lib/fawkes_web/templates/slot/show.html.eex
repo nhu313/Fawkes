@@ -1,0 +1,23 @@
+<h2>Show Slot</h2>
+
+<ul>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @slot.slug %>
+  </li>
+
+  <li>
+    <strong>Start time:</strong>
+    <%= @slot.start_time %>
+  </li>
+
+  <li>
+    <strong>End time:</strong>
+    <%= @slot.end_time %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: slot_path(@conn, :edit, @slot) %></span>
+<span><%= link "Back", to: slot_path(@conn, :index) %></span>

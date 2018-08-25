@@ -24,6 +24,8 @@ defmodule FawkesWeb.Router do
     post "/categories", CategoryController, :create
     get "/categories", CategoryController, :index
     resources "/audiences", AudienceController
+    resources "/schedule_slots", SlotController
+    resources "/speakers", SpeakerController
 
   end
 

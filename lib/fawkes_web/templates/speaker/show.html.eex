@@ -1,0 +1,48 @@
+<h2>Show Speaker</h2>
+
+<ul>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @speaker.slug %>
+  </li>
+
+  <li>
+    <strong>Image url:</strong>
+    <%= @speaker.image_url %>
+  </li>
+
+  <li>
+    <strong>First:</strong>
+    <%= @speaker.first %>
+  </li>
+
+  <li>
+    <strong>Last:</strong>
+    <%= @speaker.last %>
+  </li>
+
+  <li>
+    <strong>Company:</strong>
+    <%= @speaker.company %>
+  </li>
+
+  <li>
+    <strong>Github:</strong>
+    <%= @speaker.github %>
+  </li>
+
+  <li>
+    <strong>Twitter:</strong>
+    <%= @speaker.twitter %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @speaker.description %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: speaker_path(@conn, :edit, @speaker) %></span>
+<span><%= link "Back", to: speaker_path(@conn, :index) %></span>

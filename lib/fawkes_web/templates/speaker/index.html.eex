@@ -1,0 +1,40 @@
+<h2>Listing Speakers</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Slug</th>
+      <th>Image url</th>
+      <th>First</th>
+      <th>Last</th>
+      <th>Company</th>
+      <th>Github</th>
+      <th>Twitter</th>
+      <th>Description</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for speaker <- @speakers do %>
+    <tr>
+      <td><%= speaker.slug %></td>
+      <td><%= speaker.image_url %></td>
+      <td><%= speaker.first %></td>
+      <td><%= speaker.last %></td>
+      <td><%= speaker.company %></td>
+      <td><%= speaker.github %></td>
+      <td><%= speaker.twitter %></td>
+      <td><%= speaker.description %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: speaker_path(@conn, :show, speaker), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: speaker_path(@conn, :edit, speaker), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: speaker_path(@conn, :delete, speaker), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Speaker", to: speaker_path(@conn, :new) %></span>

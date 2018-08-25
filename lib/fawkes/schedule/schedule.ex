@@ -119,4 +119,196 @@ defmodule Fawkes.Schedule do
   def change_audience(%Audience{} = audience) do
     Audience.changeset(audience, %{})
   end
+
+  alias Fawkes.Schedule.Slot
+
+  @doc """
+  Returns the list of schedule_slots.
+
+  ## Examples
+
+      iex> list_schedule_slots()
+      [%Slot{}, ...]
+
+  """
+  def list_schedule_slots do
+    Repo.all(Slot)
+  end
+
+  @doc """
+  Gets a single slot.
+
+  Raises `Ecto.NoResultsError` if the Slot does not exist.
+
+  ## Examples
+
+      iex> get_slot!(123)
+      %Slot{}
+
+      iex> get_slot!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_slot!(id), do: Repo.get!(Slot, id)
+
+  @doc """
+  Creates a slot.
+
+  ## Examples
+
+      iex> create_slot(%{field: value})
+      {:ok, %Slot{}}
+
+      iex> create_slot(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_slot(attrs \\ %{}) do
+    %Slot{}
+    |> Slot.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a slot.
+
+  ## Examples
+
+      iex> update_slot(slot, %{field: new_value})
+      {:ok, %Slot{}}
+
+      iex> update_slot(slot, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_slot(%Slot{} = slot, attrs) do
+    slot
+    |> Slot.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Slot.
+
+  ## Examples
+
+      iex> delete_slot(slot)
+      {:ok, %Slot{}}
+
+      iex> delete_slot(slot)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_slot(%Slot{} = slot) do
+    Repo.delete(slot)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking slot changes.
+
+  ## Examples
+
+      iex> change_slot(slot)
+      %Ecto.Changeset{source: %Slot{}}
+
+  """
+  def change_slot(%Slot{} = slot) do
+    Slot.changeset(slot, %{})
+  end
+
+  alias Fawkes.Schedule.Speaker
+
+  @doc """
+  Returns the list of speakers.
+
+  ## Examples
+
+      iex> list_speakers()
+      [%Speaker{}, ...]
+
+  """
+  def list_speakers do
+    Repo.all(Speaker)
+  end
+
+  @doc """
+  Gets a single speaker.
+
+  Raises `Ecto.NoResultsError` if the Speaker does not exist.
+
+  ## Examples
+
+      iex> get_speaker!(123)
+      %Speaker{}
+
+      iex> get_speaker!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_speaker!(id), do: Repo.get!(Speaker, id)
+
+  @doc """
+  Creates a speaker.
+
+  ## Examples
+
+      iex> create_speaker(%{field: value})
+      {:ok, %Speaker{}}
+
+      iex> create_speaker(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_speaker(attrs \\ %{}) do
+    %Speaker{}
+    |> Speaker.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a speaker.
+
+  ## Examples
+
+      iex> update_speaker(speaker, %{field: new_value})
+      {:ok, %Speaker{}}
+
+      iex> update_speaker(speaker, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_speaker(%Speaker{} = speaker, attrs) do
+    speaker
+    |> Speaker.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Speaker.
+
+  ## Examples
+
+      iex> delete_speaker(speaker)
+      {:ok, %Speaker{}}
+
+      iex> delete_speaker(speaker)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_speaker(%Speaker{} = speaker) do
+    Repo.delete(speaker)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking speaker changes.
+
+  ## Examples
+
+      iex> change_speaker(speaker)
+      %Ecto.Changeset{source: %Speaker{}}
+
+  """
+  def change_speaker(%Speaker{} = speaker) do
+    Speaker.changeset(speaker, %{})
+  end
 end
