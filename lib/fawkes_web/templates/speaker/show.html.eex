@@ -1,48 +1,50 @@
-<h2>Show Speaker</h2>
+<div class="container speaker-details">
+  <div class="card details">
+    <div class="card-body">
+      <img src="<%= @speaker.image_url %>" class="rounded-circle speaker-details__pic">
+      <div class="clearfix"></div>
+      <div class="speaker__info">
+        <h4><%= FawkesWeb.SharedView.full_name(@speaker) %></h4>
+        <div class="speaker__handle">
+          <i class="fab fa-github"></i> @<%= @speaker.github %>
+        </div>
+        <div class="speaker__handle">
+          <i class="fab fa-twitter"></i> @<%= @speaker.twitter %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<ul>
+  <hr />
+  <h4 class="subheader">About</h4>
+  <p><%= @speaker.description %></p>
 
-  <li>
-    <strong>Slug:</strong>
-    <%= @speaker.slug %>
-  </li>
+  <hr />
+  <h4 class="subheader">Talk</h4>
+  <div class="card">
+    <div class="card-body">
+      <a href="/talks/<%= @speaker.talk.id %>" class="float-right schedule__talk-link"><i class="fas fa-angle-right"></i></a>
+      <p class="subtext"><%= Timex.format!(@speaker.talk.slot.start_time, "%-I:%M %p", :strftime)%> - <%= Timex.format!(@speaker.talk.slot.end_time, "%-I:%M %p", :strftime) %></p>
+      <a href="/talks/<%= @speaker.talk.id %>"><h3 class="schedule__talk-title"><%= @speaker.talk.title %></h3></a>
+      <div class="schedule__details"><%= FawkesWeb.SharedView.full_name(@speaker) %> &nbsp; | &nbsp; <%= @speaker.talk.location.name %></div>
+      <p class="icons">
+        <button class="btn talk__audience"><%= @speaker.talk.audience.name %></button>
+        <%= for category <- @speaker.talk.categories do %>
+            <%= if category.icon_url do %>
+              <img src="<%= category.icon_url %>">
+            <% else %>
+            <button class="btn talk__category">
+              <%= category.name %>
+            </button>
+            <% end %>
+        <% end %>
+      </p>
+      <div class="add-to-schedule action">
+        <i class="far fa-calendar-check"></i>
+        ADD TO AGENDA
+      </div>
+    </div>
+  </div>
 
-  <li>
-    <strong>Image url:</strong>
-    <%= @speaker.image_url %>
-  </li>
 
-  <li>
-    <strong>First:</strong>
-    <%= @speaker.first %>
-  </li>
-
-  <li>
-    <strong>Last:</strong>
-    <%= @speaker.last %>
-  </li>
-
-  <li>
-    <strong>Company:</strong>
-    <%= @speaker.company %>
-  </li>
-
-  <li>
-    <strong>Github:</strong>
-    <%= @speaker.github %>
-  </li>
-
-  <li>
-    <strong>Twitter:</strong>
-    <%= @speaker.twitter %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @speaker.description %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: speaker_path(@conn, :edit, @speaker) %></span>
-<span><%= link "Back", to: speaker_path(@conn, :index) %></span>
+</div>
