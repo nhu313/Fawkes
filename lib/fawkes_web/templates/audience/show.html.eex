@@ -1,0 +1,18 @@
+<h2>Show Audience</h2>
+
+<ul>
+
+  <li>
+    <strong>Slug:</strong>
+    <%= @audience.slug %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @audience.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: audience_path(@conn, :edit, @audience) %></span>
+<span><%= link "Back", to: audience_path(@conn, :index) %></span>

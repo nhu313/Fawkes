@@ -23,6 +23,7 @@ defmodule FawkesWeb.Router do
     delete "/category/:id", CategoryController, :delete
     post "/categories", CategoryController, :create
     get "/categories", CategoryController, :index
+    resources "/audiences", AudienceController
 
   end
 
