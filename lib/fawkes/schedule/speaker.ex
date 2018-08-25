@@ -12,7 +12,7 @@ defmodule Fawkes.Schedule.Speaker do
     field :last, :string
     field :slug, :string
     field :twitter, :string
-    field :talk_id, :id
+    belongs_to :talk, Fawkes.Schedule.Talk
 
     timestamps()
   end

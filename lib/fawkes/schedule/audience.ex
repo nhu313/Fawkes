@@ -6,6 +6,7 @@ defmodule Fawkes.Schedule.Audience do
   schema "audiences" do
     field :name, :string
     field :slug, :string
+    has_many :talks, Fawkes.Schedule.Talk
 
     timestamps()
   end

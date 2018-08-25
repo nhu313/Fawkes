@@ -8,6 +8,9 @@ defmodule Fawkes.Schedule.Slot do
     field :slug, :string
     field :start_time, :utc_datetime
 
+    has_many :talks, Fawkes.Schedule.Talk
+    has_one :event, Fawkes.Schedule.Event
+    
     timestamps()
   end
 

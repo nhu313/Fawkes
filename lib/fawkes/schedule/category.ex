@@ -8,6 +8,8 @@ defmodule Fawkes.Schedule.Category do
     field :name, :string
     field :slug, :string
 
+    many_to_many :talks, Fawkes.Schedule.Talk, join_through: "talks_categories"
+
     timestamps()
   end
 
