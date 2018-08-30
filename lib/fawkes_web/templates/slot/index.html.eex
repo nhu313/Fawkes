@@ -17,12 +17,14 @@
       </div>
       <div class="d-flex justify-content-center talk-index__tab">
         <a href="/schedule_slots" class="talk-tab__link talk-tab__link-active"><h4 class="subheader">Full Schedule</h4></a>
-        <a href="" class="talk-tab__link"><h4 class="subheader">My Agenda</h4></a>
+        <a href="/agenda" class="talk-tab__link"><h4 class="subheader">My Agenda</h4></a>
       </div>
     </div>
   </div>
 
   <div class="container schedule">
+    <p class="alert alert-info" role="alert"></p>
+    <p class="alert alert-danger" role="alert"></p>
     <%= for {date, slots} <- @schedule_slots do %>
       <h2><%= Timex.format!(date, "%A  %m/%d/%y", :strftime)%></h2>
       <%= for slot <- slots do %>
@@ -50,10 +52,12 @@
                       <% end %>
                   <% end %>
                 </p>
-                <div class="add-to-schedule action">
-                  <i class="far fa-calendar-check"></i>
-                  ADD TO AGENDA
-                </div>
+                <%= if @conn.assigns[:current_user] do %>
+                  <div class="add-to-schedule action" data-talk-id="<%= talk.id %>">
+                    <i class="far fa-calendar-check"></i>
+                    ADD TO AGENDA
+                  </div>
+                <% end %>
               </div>
             </div>
           <% end %>
@@ -62,3 +66,22 @@
     <% end %>
   </div>
 </div>
+
+<%= if @conn.assigns[:current_user] do %>
+  <script>
+    $(document).ready(function() {
+      $('.add-to-schedule').click(function(event) {
+        var talkId = $(this).data("talk-id");
+        var data = { user_id: <%= @conn.assigns[:current_user].id %>, talk_id: talkId}
+
+        $.post( "/api/users_talks", data)
+            .done(function( data ) {
+              var alert = $('.alert-info');
+              alert.text(data.message);
+              alert.show();
+              setTimeout(function(){ alert.hide() }, 2000);
+            });
+      })
+    });
+  </script>
+<% end %>

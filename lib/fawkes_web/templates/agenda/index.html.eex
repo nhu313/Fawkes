@@ -1,0 +1,52 @@
+<div class="talk-index">
+  <div class="section-white">
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center dates">
+        <i class="fas fa-arrow-left"></i>
+        <%= for {day_number, day_name} <- [{4, "Tue"}, {5, "Wed"}, {6, "Thu"}, {7, "Fri"}] do %>
+          <div class="card">
+            <div class="card-body">
+              <div class="dates__name smalltext"><%= day_name %></div>
+              <div class="dates__number"><%= day_number %></div>
+            </div>
+          </div>
+        <% end %>
+        <i class="fas fa-arrow-right"></i>
+      </div>
+      <div class="d-flex justify-content-center talk-index__tab">
+        <a href="/schedule_slots" class="talk-tab__link"><h4 class="subheader">Full Schedule</h4></a>
+        <a href="/agenda" class="talk-tab__link talk-tab__link-active"><h4 class="subheader">My Agenda</h4></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container schedule">
+    <%= for talk <- @talks do %>
+      <div class="card">
+        <div class="card-body">
+          <div class="float-right schedule__talk-link"><i class="fas fa-angle-right"></i></div>
+          <h4 class="subheader"><%= Timex.format!(talk.slot.start_time, "%-I:%M %p", :strftime)%> - <%= Timex.format!(talk.slot.end_time, "%-I:%M %p", :strftime) %></h4>
+          <a href="/talks/<%= talk.id %>"><h3 class="schedule__talk-title"><%= talk.title %></h3></a>
+
+          <div class="schedule__details"><%= FawkesWeb.SharedView.full_name(talk.speakers) %> &nbsp; | &nbsp; <%= talk.location.name %></div>
+          <p class="icons">
+            <button class="btn talk__audience"><%= talk.audience.name %></button>
+            <%= for category <- talk.categories do %>
+                <%= if category.icon_url do %>
+                  <img src="<%= category.icon_url %>">
+                <% else %>
+                <button class="btn talk__category">
+                  <%= category.name %>
+                </button>
+                <% end %>
+            <% end %>
+          </p>
+          <div class="add-to-schedule action">
+            <i class="far fa-calendar-check"></i>
+            ADD TO AGENDA
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

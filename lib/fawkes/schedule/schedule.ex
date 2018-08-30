@@ -142,6 +142,9 @@ defmodule Fawkes.Schedule do
 
   end
 
+
+
+
   @doc """
   Gets a single slot.
 

@@ -46,7 +46,7 @@ defmodule FawkesWeb.Router do
     resources "/audiences", AudienceController
     resources "/schedule_slots", SlotController
     resources "/speakers", SpeakerController
-
+    get "/agenda", AgendaController, :index
   end
 
   scope "/signup", FawkesWeb.Signup, as: :signup do
@@ -63,7 +63,9 @@ defmodule FawkesWeb.Router do
 
 
   scope "/api", FawkesWeb do
-    pipe_through [:api, :ensure_auth]
-    resources "/users", UserController, except: [:new, :edit]
+    pipe_through [:api]
+
+    # post "/agenda", UserTalkController, :create
+    resources "/users_talks", UserTalkController, except: [:new, :edit]
   end
 end
