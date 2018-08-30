@@ -65,7 +65,6 @@ defmodule FawkesWeb.Router do
   scope "/api", FawkesWeb do
     pipe_through [:api]
 
-    # post "/agenda", UserTalkController, :create
     resources "/users_talks", UserTalkController, except: [:new, :edit]
   end
 end
