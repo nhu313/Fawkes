@@ -66,3 +66,10 @@ config :fawkes,
        issuer: "fawkes",
        secret_key: Map.fetch!(System.get_env(),
                               "GUARDIAN_KEY")
+
+config :arc,
+       bucket: Map.fetch!(System.get_env(),  "S3_BUCKET")
+
+config :ex_aws,
+  access_key_id: [Map.fetch!(System.get_env(), "AWS_ACCESS_KEY"), :instance_role],
+  secret_access_key: [Map.fetch!(System.get_env(), "AWS_SECRET_KEY"), :instance_role]

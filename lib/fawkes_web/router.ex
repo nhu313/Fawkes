@@ -45,6 +45,7 @@ defmodule FawkesWeb.Router do
     resources "/audiences", AudienceController
     resources "/schedule_slots", SlotController
     resources "/speakers", SpeakerController
+    resources("/member", ProfileController, only: [:index, :show])
 
   end
 
@@ -59,6 +60,13 @@ defmodule FawkesWeb.Router do
 
     resources "/", UserController, only: [:new, :create]
   end
+
+  scope "/", FawkesWeb, as: :membership do
+    pipe_through [:browser, :guardian, :ensure_auth]
+
+    resources("/profile", ProfileController, only: [:edit, :update], singleton: true)
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", FawkesWeb do
   #   pipe_through :api

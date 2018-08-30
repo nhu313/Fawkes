@@ -1,3 +1,9 @@
+<%=
+  {@speaker.image, @speaker}
+  |> Fawkes.Uploader.Image.url()
+  |> img_tag()
+%>
+
 <div class="container speaker-details">
   <div class="card details">
     <div class="card-body">
