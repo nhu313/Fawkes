@@ -11,7 +11,7 @@ defmodule FawkesWeb.Auth.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    case Auth.create_user(user_params) do
+    case Auth.authenticate_user(user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:info, "User created successfully.")

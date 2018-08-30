@@ -11,6 +11,7 @@ defmodule FawkesWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug(:fetch_session)
   end
 
   pipeline :guardian do
@@ -59,8 +60,10 @@ defmodule FawkesWeb.Router do
 
     resources "/", UserController, only: [:new, :create]
   end
-  # Other scopes may use custom stacks.
-  # scope "/api", FawkesWeb do
-  #   pipe_through :api
-  # end
+
+
+  scope "/api", FawkesWeb do
+    pipe_through [:api, :ensure_auth]
+    resources "/users", UserController, except: [:new, :edit]
+  end
 end
