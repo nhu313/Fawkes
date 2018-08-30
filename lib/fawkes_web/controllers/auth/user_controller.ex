@@ -16,7 +16,7 @@ defmodule FawkesWeb.Auth.UserController do
         conn
         |> put_flash(:info, "User created successfully.")
         |> GuardianPlug.sign_in(user)
-        |> redirect(to: schedule_path(conn, :index))
+        |> redirect(to: slot_path(conn, :index))
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
