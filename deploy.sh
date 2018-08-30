@@ -14,3 +14,4 @@ heroku config:set AWS_SECRET_KEY="aaa"
 git push heroku master
 
 heroku run "POOL_SIZE=2 mix ecto.migrate"
+heroku run "POOL_SIZE=2 mix run priv/repo/seeds.exs"
