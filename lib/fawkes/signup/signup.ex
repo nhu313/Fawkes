@@ -1,39 +1,40 @@
-defmodule Fawkes.Signup do
-  @moduledoc """
-  The Signup context.
-  """
+defmodule Fawkes.Signup.User do
+  use Ecto.Schema
+  import Ecto.Changeset
 
-  alias Fawkes.Repo
-  alias Fawkes.Signup.User
+  @bad_passwords ~w(
+    12345678
+    password1
+    qwertyuiop
+  )
 
-  @doc """
-  Creates a user.
+  schema "users" do
+    field :password, :string
+    field :username, :string
 
-  ## Examples
-
-      iex> create_user(%{field: value})
-      {:ok, %User{}}
-
-      iex> create_user(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
+    timestamps()
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking user changes.
+  @doc false
+  def changeset(user, attrs) do
+    user
+    |> cast(attrs, [:username, :password])
+    |> validate_required([:username, :password])
+    |> unique_constraint(:username)
+    |> validate_exclusion(
+         :password,
+         @bad_passwords,
+         message: "That password is too common.")
+    |> validate_length(:password, min: 8)
+    |> put_pass_hash()
+  end
 
-  ## Examples
+  defp put_pass_hash(%{valid?: true, changes: params} = changeset) do
+    password = Comeonin.Bcrypt.hashpwsalt(params[:password])
+    change(changeset, password: password)
+  end
 
-      iex> change_user(user)
-      %Ecto.Changeset{source: %User{}}
-
-  """
-  def change_user(%User{} = user) do
-    User.changeset(user, %{})
+  defp put_pass_hash(changeset) do
+    change(changeset, password: "")
   end
 end

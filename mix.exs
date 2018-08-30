@@ -41,7 +41,10 @@ defmodule Fawkes.Mixfile do
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
-      {:timex_ecto, "~> 3.3"}
+      {:timex_ecto, "~> 3.3"},
+      # For authentication
+      {:bcrypt_elixir, "~> 1.0"},
+      {:comeonin, "~>4.0"},
     ]
   end
 
