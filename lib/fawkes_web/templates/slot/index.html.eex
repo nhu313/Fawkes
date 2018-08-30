@@ -17,7 +17,9 @@
       </div>
       <div class="d-flex justify-content-center talk-index__tab">
         <a href="/schedule_slots" class="talk-tab__link talk-tab__link-active"><h4 class="subheader">Full Schedule</h4></a>
-        <a href="/agenda" class="talk-tab__link"><h4 class="subheader">My Agenda</h4></a>
+        <%= if @conn.assigns[:current_user] do %>
+          <a href="/agenda" class="talk-tab__link"><h4 class="subheader">My Agenda</h4></a>
+        <% end %>
       </div>
     </div>
   </div>
@@ -76,6 +78,7 @@
 
         $.post( "/api/users_talks", data)
             .done(function( data ) {
+              console.log(data);
               var alert = $('.alert-info');
               alert.text(data.message);
               alert.show();
