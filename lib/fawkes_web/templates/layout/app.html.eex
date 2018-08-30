@@ -27,7 +27,13 @@
             <li><a href="/categories">Categories</a></li>
             <li><a href="/speakers">Speakers</a></li>
             <li><a href="/schedule_slots">Talks</a></li>
-          </ul>
+              <%= if is_nil @conn.assigns[:current_user] do %>
+                <li><%= link gettext("Get Started"), to: signup_user_path(@conn, :new) %></li>
+                <li><%= link gettext("Log In"), to: auth_user_path(@conn, :new) %></li>
+              <% else %>
+                <li><%= link gettext("Logout"), to: auth_user_path(@conn, :delete), method: :post%></li>
+              <% end %>
+            </ul>
         </nav>
       </div>
     </header>
