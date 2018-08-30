@@ -26,14 +26,12 @@ defmodule FawkesWeb.Router do
 
   scope "/", FawkesWeb do
     pipe_through [:browser, :guardian, :ensure_auth]
-    post("/logout", PageController, :logout)
+    post("/logout", Auth.UserController, :delete)
   end
 
   scope "/", FawkesWeb do
     # pipe_through :browser # Use the default browser stack
     pipe_through [:browser, :guardian]
-
-    post("/logout", Auth.UserController, :delete)
 
     get "/talks/:id", TalkController, :show
     get "/", PageController, :index
