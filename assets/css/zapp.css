@@ -51,6 +51,7 @@ hr {
 
 .btn {
   background-color: #284c6e;
+  border: 0;
   color: #FFF;
   border-radius: 50px;
   text-transform: uppercase;
@@ -115,7 +116,7 @@ p {
   vertical-align: middle;
 }
 
-.action .fa-calendar-check {
+.schedule__action .far {
   font-size: 20px;
   padding-right: 5px;
 }
@@ -288,4 +289,19 @@ hr {
 
 .gray {
   color: #888;
+}
+
+.schedule__date {
+  text-align: center;
+}
+
+.schedule__talk {
+  border-bottom: 1px solid #DDD;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+.schedule__talk:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
 }

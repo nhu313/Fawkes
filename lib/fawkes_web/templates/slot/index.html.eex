@@ -28,42 +28,62 @@
     <p class="alert alert-info" role="alert"></p>
     <p class="alert alert-danger" role="alert"></p>
     <%= for {date, slots} <- @schedule_slots do %>
-      <h2><%= Timex.format!(date, "%A  %m/%d/%y", :strftime)%></h2>
+      <h2 class="schedule__date"><%= Timex.format!(date, "%A  %m/%d/%y", :strftime)%></h2>
       <%= for slot <- slots do %>
-        <h4 class="subheader"><%= Timex.format!(slot.start_time, "%-I:%M %p", :strftime)%> - <%= Timex.format!(slot.end_time, "%-I:%M %p", :strftime) %></h4>
-        <%= if slot.event do %>
-          <h3 class="gray"><%= slot.event.name %></h3>
-        <% else %>
-          <%= for talk <- slot.talks do %>
-            <div class="card">
-              <div class="card-body">
-                <div class="float-right schedule__talk-link"><i class="fas fa-angle-right"></i></div>
-                <p class="subtext"><%= Timex.format!(slot.start_time, "%-I:%M %p", :strftime)%> - <%= Timex.format!(slot.end_time, "%-I:%M %p", :strftime) %></p>
-                <a href="/talks/<%= talk.id %>"><h3 class="schedule__talk-title"><%= talk.title %></h3></a>
-
-                <div class="schedule__details"><%= FawkesWeb.SharedView.full_name(talk.speakers) %> &nbsp; | &nbsp; <%= talk.location.name %></div>
-                <p class="icons">
-                  <button class="btn talk__audience"><%= talk.audience.name %></button>
-                  <%= for category <- talk.categories do %>
-                      <%= if category.icon_url do %>
-                        <img src="<%= category.icon_url %>" alt="<%= category.name %>">
-                      <% else %>
-                      <button class="btn talk__category">
-                        <%= category.name %>
-                      </button>
-                      <% end %>
-                  <% end %>
-                </p>
-                <%= if @conn.assigns[:current_user] do %>
-                  <div class="add-to-schedule action" data-talk-id="<%= talk.id %>">
-                    <i class="far fa-calendar-check"></i>
-                    ADD TO AGENDA
+        <div class="card">
+          <div class="card-header">
+            <h4 class="subheader schedule__time">
+              <%= Timex.format!(slot.start_time, "%-I:%M %p", :strftime)%> - <%= Timex.format!(slot.end_time, "%-I:%M %p", :strftime) %>
+            </h4>
+          </div>
+          <div class="card-body">
+            <%= if slot.event do %>
+              <h3 class="gray"><%= slot.event.name %></h3>
+            <% else %>
+              <%= for talk <- slot.talks do %>
+                <div class="schedule__talk">
+                  <div class="float-right schedule__talk-link">
+                    <i class="fas fa-angle-right"></i>
                   </div>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
+                  <a href="/talks/<%= talk.id %>">
+                    <h3 class="schedule__talk-title">
+                      <%= talk.title %>
+                    </h3>
+                  </a>
+
+                  <div class="schedule__details">
+                    <%= FawkesWeb.SharedView.full_name(talk.speakers) %> &nbsp; | &nbsp; <%= talk.location.name %>
+                  </div>
+                  <p class="icons">
+                    <button class="btn talk__audience"><%= talk.audience.name %></button>
+                    <%= for category <- talk.categories do %>
+                        <%= if category.icon_url do %>
+                          <img src="<%= category.icon_url %>" alt="<%= category.name %>">
+                        <% else %>
+                          <button class="btn talk__category">
+                            <%= category.name %>
+                          </button>
+                        <% end %>
+                    <% end %>
+                  </p>
+                  <%= if @conn.assigns[:current_user] do %>
+                    <div class="schedule__action" data-talk-id="<%= talk.id %>">
+                      <div class="add-to-schedule">
+                        <i class="far fa-calendar-check"></i>
+                        ADD TO AGENDA
+                      </div>
+                      <div class="remove-from-schedule" style="display: none">
+                        <i class="far fa-trash-alt"></i>
+                        REMOVE FROM AGENDA
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %> <!-- end for loop -->
+            <% end %> <!-- end if statement -->
+          </div>
+        </div>
+
       <% end %>
     <% end %>
   </div>
@@ -73,18 +93,33 @@
   <script>
     $(document).ready(function() {
       $('.add-to-schedule').click(function(event) {
-        var talkId = $(this).data("talk-id");
+        var parent = $(this).parent();
+        var talkId = parent.data('talk-id');
         var data = { user_id: <%= @conn.assigns[:current_user].id %>, talk_id: talkId}
 
-        $.post( "/api/users_talks", data)
+        $.post( '/api/users_talks', data)
             .done(function( data ) {
-              console.log(data);
-              var alert = $('.alert-info');
-              alert.text(data.message);
-              alert.show();
-              setTimeout(function(){ alert.hide() }, 2000);
+              console.log(data.data.id);
+              console.log(parent.find('.remove-from-schedule'));
+              parent.find('.add-to-schedule').hide();
+              parent.find('.remove-from-schedule').data('user-talk-id', data.data.id).show();
             });
-      })
+        })
+
+      $('.remove-from-schedule').click(function(event) {
+        var parent = $(this).parent();
+        var id = $(this).data('user-talk-id');
+
+        $.ajax({
+            url: '/api/users_talks/' + id,
+            type: 'DELETE',
+            success: function(result) {
+              parent.find('.add-to-schedule').show();
+              parent.find('.remove-from-schedule').hide();
+            }
+        });
+      });
+
     });
   </script>
 <% end %>

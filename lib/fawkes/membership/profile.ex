@@ -15,7 +15,7 @@ defmodule Fawkes.Membership.Profile do
     field(:last, :string)
     field(:slug, SymbolType)
     field(:twitter, :string)
-    field(:title, :string)
+    # field(:title, :string)
 
     belongs_to(:user, Fawkes.Profile.User)
 
