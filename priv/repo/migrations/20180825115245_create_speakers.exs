@@ -12,6 +12,8 @@ defmodule Fawkes.Repo.Migrations.CreateSpeakers do
       add :twitter, :string
       add :description, :text
       add :talk_id, references(:talks, on_delete: :nothing)
+      add :image, :string
+
 
       timestamps()
     end
