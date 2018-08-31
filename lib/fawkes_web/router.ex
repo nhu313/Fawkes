@@ -11,6 +11,7 @@ defmodule FawkesWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug(:fetch_session)
   end
 
   pipeline :guardian do
@@ -25,14 +26,12 @@ defmodule FawkesWeb.Router do
 
   scope "/", FawkesWeb do
     pipe_through [:browser, :guardian, :ensure_auth]
-    post("/logout", PageController, :logout)
+    post("/logout", Auth.UserController, :delete)
   end
 
   scope "/", FawkesWeb do
     # pipe_through :browser # Use the default browser stack
     pipe_through [:browser, :guardian]
-
-    post("/logout", Auth.UserController, :delete)
 
     get "/talks/:id", TalkController, :show
     get "/", PageController, :index
@@ -46,7 +45,7 @@ defmodule FawkesWeb.Router do
     resources "/schedule_slots", SlotController
     resources "/speakers", SpeakerController
     resources("/member", ProfileController, only: [:index, :show])
-
+    get "/agenda", AgendaController, :index
   end
 
   scope "/signup", FawkesWeb.Signup, as: :signup do
@@ -67,8 +66,10 @@ defmodule FawkesWeb.Router do
     resources("/profile", ProfileController, only: [:edit, :update], singleton: true)
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", FawkesWeb do
-  #   pipe_through :api
-  # end
+
+  scope "/api", FawkesWeb do
+    pipe_through [:api]
+
+    resources "/users_talks", UserTalkController, except: [:new, :edit]
+  end
 end

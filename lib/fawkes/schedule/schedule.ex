@@ -142,6 +142,9 @@ defmodule Fawkes.Schedule do
 
   end
 
+
+
+
   @doc """
   Gets a single slot.
 
@@ -254,7 +257,11 @@ defmodule Fawkes.Schedule do
       ** (Ecto.NoResultsError)
 
   """
-  def get_speaker!(id), do: Repo.get!(Speaker, id)
+  def get_speaker!(id) do
+    Speaker
+    |> preload(talk: [:slot, :speakers, :categories, :audience, :location])
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a speaker.

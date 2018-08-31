@@ -2,11 +2,10 @@ defmodule Fawkes.Auth do
   @moduledoc """
   The Auth context.
   """
-
   import Ecto.Query, warn: false
-  alias Comeonin.Bcrypt
-  alias Fawkes.Auth.User
   alias Fawkes.Repo
+  alias Fawkes.Auth.User
+  alias Comeonin.Bcrypt
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
@@ -27,7 +26,7 @@ defmodule Fawkes.Auth do
     |> check_password(pass)
   end
 
-  defp fetch_user_by_username(username) do
+  def fetch_user_by_username(username) do
     User
     |> where([user], user.username == ^username)
     |> Repo.one
@@ -45,5 +44,5 @@ defmodule Fawkes.Auth do
     end
   end
 
-  defp check_password(_, _), do: false
+  defp check_password(_, _), do: {:error, :incorrect}
 end

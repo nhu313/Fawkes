@@ -15,6 +15,8 @@
 
 
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   </head>
 
   <body class="body">
@@ -31,7 +33,7 @@
                 <li><%= link gettext("Create Account"), to: signup_user_path(@conn, :new) %></li>
                 <li><%= link gettext("Log In"), to: auth_user_path(@conn, :new) %></li>
               <% else %>
-                <li><%= link gettext("Logout"), to: auth_user_path(@conn, :delete), method: :post%></li>
+                <li><%= link gettext("Logout"), to: user_path(@conn, :delete), method: :post%></li>
               <% end %>
             </ul>
         </nav>
@@ -42,6 +44,7 @@
         <%= render @view_module, @view_template, assigns %>
       </main>
     </div> <!-- /container -->
+
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>
