@@ -108,7 +108,7 @@ p {
   border-radius: 5px;
 }
 
-.action {
+.schedule__action {
   text-transform: uppercase;
   font-size: 12px;
   font-weight: bold;
